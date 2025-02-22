@@ -1,0 +1,54 @@
+How to connect Arduino to NE-1000 syringe pump:
+
+	Need a RS-232 to TTL adapter
+
+	Since the NE-1000 uses RS-232 (±12V logic levels), and the Arduino uses TTL (0-5V logic levels), you'll need an RS-232 to TTL adapter (like a MAX232 module) to safely interface the two.
+
+Wiring with an RS-232 to TTL Adapter
+NE-1000 Pin	RS-232 Adapter Pin	Arduino Pin
+TX (pin 2)	RX			TX (pin 1)
+RX (pin 3)	TX			RX (pin 0)
+GND (pin 5)	GND			GND
+
+⚠ Important:
+
+The TX of NE-1000 connects to RX of the Arduino, and RX of NE-1000 connects to TX of the Arduino (through the adapter).
+If using Arduino Uno, software serial is needed since pins 0 and 1 are for USB.
+If using Mega, hardware serial (Serial1) is better.
+		
+
+
+
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial pumpSerial(10, 11); // RX, TX (connect to RS-232 adapter)
+
+void setup() {
+    Serial.begin(9600);   // For monitoring
+    pumpSerial.begin(19200); // NE-1000 default baud rate
+
+    delay(1000);
+    Serial.println("Starting NE-1000 Pump...");
+    pumpSerial.println("RUN\r"); // Start infusion
+}
+
+void loop() {
+    // Example: Stop the pump after 10 seconds
+    delay(10000);
+    Serial.println("Stopping Pump...");
+    pumpSerial.println("STP\r"); // Stop infusion
+
+    while (true); // Stop further execution
+}
+NE-1000 Commands
+Here are some useful serial commands:
+
+Command	Function
+RUN\r	Start infusion
+STP\r	Stop infusion
+RAT 5.0 MH\r	Set rate to 5.0 mL/hr
+VOL 10.0 ML\r	Set volume to 10.0 mL
+DIA 20.0\r	Set syringe diameter to 20.0 mm
+DIS\r	Display current status
+All commands must end with \r (carriage return).
