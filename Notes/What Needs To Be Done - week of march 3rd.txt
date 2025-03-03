@@ -1,0 +1,26 @@
+What Needs To Be Done:
+
+Structure:
+- casing for motor
+	- plastic box?
+- mount motor to breadboard
+	- some form of adapter to connect to the motor and the breadboard
+- 3d print shielding
+- put up extrusions - might need machining (cutting in half)
+- right angle brackets need shaving
+- connect linear translator to extrusion crossbar
+	- need some sort of male to male m5 connector to mount together
+	- M5 Double ended stud bolts
+- machine holes in syringe pump to connect to linear translator
+- screw (female) to put on chuck for spinning platform
+
+Software:
+- write testing code for each of the components
+- go over how to control syringe pump with Arduino
+
+
+
+
+Shopping:
+-M5 Double Ended Stud Bolts
+-Plastic box for motor 
