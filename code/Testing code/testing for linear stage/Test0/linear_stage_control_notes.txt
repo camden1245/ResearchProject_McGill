@@ -1,0 +1,108 @@
+////
+Basic idea:
+- travel to rear limit switch. 
+	- if (digitalread(rearLimitSwitchPin) == LOW{
+			homedStatus = homed
+	
+- once rear limit switch hit, set position as 0
+		- currentPosition = 0 
+- travel x distance from 0 (to spin coater location)
+		- travel x steps
+- travel x+k distance from 0 (to second coating location)
+		- travel x +k steps
+- travel back and forth from these two positions n times
+		- for (int i =0; i<n; i++){
+			travel to position x
+			delay(t)
+			travel to position x + k
+			delay(t)
+			}
+-
+/*-----------------------------------------------------------------------------------------------------------------------*/
+ 
+Other functionalities:
+- if hit rear/forwardLimitSwitch AND homedStaus is already homed. set enable pin to LOW to stop the motor, there is an issue
+	- if (digitalread(rearLimitSwitchPin)==LOW & homedStatus == homed {
+		digitalWrite(ENA,LOW)
+		}
+	- if (digitalread(forwardLimitSwitchPin)==LOW & homedStatus == homed {
+		digitalWrite(ENA,LOW)
+		}
+...
+/*-----------------------------------------------------------------------------------------------------------------------*/
+PSUEDO-CODE
+/*-----------------------------------------------------------------------------------------------------------------------*/
+settings.h:
+//define pins
+#define forwardLimitSwtichPin 2
+#define rearLimitSwtichPin    3
+
+#define enaPin 5
+#define dirPin 6
+#define pulPin 7
+
+//distance settings,, subject to change
+float homeTravelDistance = 3000
+float stepsToGetOffLimitSwtichDuringHoming = 600
+
+//speed and acceleration settings
+float homingSpeed = 2000
+float homingAcceleration = 1000
+
+float forwardRunSpeed = 1000
+float forwardRunAcceleration = 2000
+
+float rearRunSpeed = 1000
+float rearRunAcceleration = 2000
+
+float maxSpeed = 10000
+
+//spin coating settings
+float spinCoatingTime = t	// spin coating time, must consider that other processes must be ready. might be t + s, s being the time it takes for other routines to prep
+int numberOfLayers = n		// number of loops that the routine will go through
+	
+	//position settings
+float positionA = x		// get this value from the amount of steps from position 0 it takes to get platform over the spin coater
+float position = x+k		// get this value from the distance from one depositing capilliary to the next 
+
+/*-----------------------------------------------------------------------------------------------------------------------*/
+Setup.h:
+//define homing states
+const int notHomed = 0
+const int homed = 1
+const int error = 3
+const int pressedDuringHome = 4
+int homeStatus = notHomed
+/*-----------------------------------------------------------------------------------------------------------------------*/
+maincode.ino
+setup function:
+- run setup functions for linear translator, motor, syringe pump etc
+
+Loop Function:
+- Start with homing the stage:
+	if (homedStatus == notHomed) {
+		digitalWrite(ENA,HIGH); // enable motor
+		stepper.moveTo(homeTravelDistance) // travel to home
+		stepper.setMaxSpeed(homingSpeed) // travel at homing speed
+		while (homeStatus == notHomed) {
+			stepper.run() // run while the stage is NOT at home
+			}
+		stepper.setCurrentPosition(0) // once at home, set this position to 0
+	// if limitswitch pressed during the homing
+	if (homedStatus == pressedDuringHome){ 
+		stepper.moveTo(-stepsToGetOffLimitSwitchDuringHoming) // move distance to get off the limit switch
+		stepper.setCurrentPosition(0) // set this new position to 0
+		homedStatus = homed // set the status to homed
+
+
+	while homedStatus == homed
+
+		run through loop n times. 
+		stepper.moveTo(x) // move to first depositing location
+		run spin coating routine from motor
+		delay(t)
+
+		stepper.moveTo(x+k) // move to second depositing location
+		run spin coating routine from motor
+		delay(t)
+/*-----------------------------------------------------------------------------------------------------------------------*/
