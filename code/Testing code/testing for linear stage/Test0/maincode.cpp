@@ -37,16 +37,20 @@ void loop(){
 void spinCoatingRoutine(){
 	for (int i = 0; i<numberOfLayers;i++){
 		stepper.moveTo(positionA);
-		while (stepper.distanceToGo != 0 ){
-			stepper.run();
-		}
+		stepper.runtoposition();
+		//while (stepper.distanceToGo != 0 ){
+		//	stepper.run();
+		//}
 		motorRoutine();
 		//delay(spinCoatingTime);
-		stepper.moveTo(postitionB);
-		while (stepper.distanceToGo != 0){
-			stepper.run();
-		}
+		delay(2000);
+		stepper.moveTo(positionB);
+		stepper.runtoposition() // test the precision of thics~!
+		//while (stepper.distanceToGo != 0){
+		//	stepper.run();
+		//}
 		motorRoutine();
-		delay(spinCoatingTime);
+		//delay(spinCoatingTime);
+		delay(2000);
 	}
 }

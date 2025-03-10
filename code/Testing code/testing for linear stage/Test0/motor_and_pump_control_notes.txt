@@ -1,0 +1,90 @@
+controlling the motor:
+
+AFTER the stage is set at positionA, 
+start ramping up the motor to a desired (initial) depositing rpm, motorDepositRPM, then when depositied (after the syringe pump does its work), start ramping up to next rpm, motorSpinCoatingRPM. The motor then holds this rpm for a set time (motorSpinCoatingTime) then ramps down, to a stop. 
+
+it will then repeat that once the linear stage is at positionB, then go back and forth for whatever n times (numberOfLayers) that is set in settings.h
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Controlling the pump steps:
+
+Bash:
+pip install pyserial
+
+Python: 
+import serial
+
+# Configure the serial connection
+ser = serial.Serial(
+    port='COM3',       # Replace with your COM port
+    baudrate=9600,     # Default baud rate for NE1000
+    bytesize=8,        # 8 data bits
+    parity='N',        # No parity
+    stopbits=1,        # 1 stop bit
+    timeout=1          # Timeout for reading
+)
+
+# Function to send commands to the pump
+def send_command(command):
+    ser.write((command + '\r\n').encode())  # Send command with carriage return and newline
+    response = ser.readline().decode().strip()  # Read the pump's response (if any)
+    return response
+
+# Read commands from a file
+with open("commands.txt", "r") as file:
+    for line in file:
+        command = line.strip()  # Remove leading/trailing whitespace
+        if command:  # Skip empty lines
+            print("Sending command:", command)
+            response = send_command(command)
+            print("Response:", response)
+
+# Close the serial connection
+ser.close()
+
+// reads files and exports the commands as serial outputs. make sure that the com port is the same as what the Arduino is connected to. 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+create file, commands.txt
+commands.txt:
+RAT 5 MM
+DIR INF
+RUN
+STP
+(for example)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+Pump_control:
+#include <SoftwareSerial.h>
+
+// Define the software serial pins
+#define RX_PIN 7
+#define TX_PIN 6
+
+// Create a SoftwareSerial object
+SoftwareSerial syringePump(RX_PIN, TX_PIN);
+
+void setup() {
+  // Start the hardware serial for debugging
+  Serial.begin(9600);
+
+  // Start the software serial for the syringe pump
+  syringePump.begin(9600);
+
+  Serial.println("Arduino Ready");
+}
+
+void loop() {
+  // Forward commands from the PC to the pump
+  if (Serial.available()) {
+    String command = Serial.readStringUntil('\n');  // Read command from PC
+    syringePump.print(command + "\r\n");           // Send command to the pump
+  }
+
+  // Forward responses from the pump to the PC
+  if (syringePump.available()) {
+    String response = syringePump.readStringUntil('\n');  // Read response from pump
+    Serial.print(response);                               // Send response to PC
+  }
+}
+// this will read the serial commands that the pc outputs, and send them to the pump 
