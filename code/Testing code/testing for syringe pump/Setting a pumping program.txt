@@ -1,0 +1,21 @@
+Setting a pumping program
+
+Creating a Simple Pumping Program
+Enter Program Entry Mode:
+
+Press and hold the ‘Rate’ key until the display shows the current Program Phase number (e.g., PH:01).
+Set the First Phase:
+
+Select Phase 1:
+Ensure the display shows PH:01.
+Set the Function to ‘RATE’:
+Press the ‘Volume’ key to display the current Program Function.
+Use the up-arrow keys to select the ‘RATE’ function.
+Set the Pumping Rate:
+Press the ‘Rate’ key.
+Use the up-arrow keys to set the rate (e.g., 500 mL/hr).
+Set the Volume to be Dispensed:
+Press the ‘Volume’ key.
+Use the up-arrow keys to set the volume (e.g., 5.0 mL).
+Set the Pumping Direction:
+Use the ‘Withdraw’ key to set the direction (e.g., Infuse).
