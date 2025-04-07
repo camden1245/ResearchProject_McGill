@@ -1,5 +1,4 @@
-// syringe pump control
-
+-// syringepump.cpp
 /*
 code to turn on pump, pump settings must be set on the device. 
 
@@ -51,23 +50,21 @@ TTL Operational Trigger Settings
 
 */
 
+#include "settings.h"
 
-# define triggerPin 2
-# define directionPin 3
-
-void syringe_pump_setup() {
-	//attach pins
-	pinMode(triggerPin, OUTPUT);
-	pinMode(directionPin, OUTPUT);
-	delay(100);
-	digitalWrite(triggerPin, HIGH);
-	
+void syringePump_Setup() {
+    pinMode(TRIGGER_PIN, OUTPUT);
+    pinMode(DIRECTION_PIN, OUTPUT);
+    digitalWrite(TRIGGER_PIN, HIGH);
 }
 
-void dispenseVolume(){
-	digitalWrite(triggerPin, LOW);
-	delay(100);
-	digitalWrite(triggerPin, HIGH);
-	//include delay ~10,000 ms after running dispenseVolume fucntion
-	delay(10000);
+void dispenseVolume() {
+	/*
+	write trigger pin LOW for a short (100ms) pulse, then back to HIGH. The device responds to the FALLING edge. 
+	implement an adequate delay afterwards for the pump to finish the predetermined pumping sequence - RUN PUMP SEQUENCE BEFORE SETTING DELAY
+	*/
+    digitalWrite(TRIGGER_PIN, LOW);
+    delay(100);
+    digitalWrite(TRIGGER_PIN, HIGH);
+    delay(10000);
 }
