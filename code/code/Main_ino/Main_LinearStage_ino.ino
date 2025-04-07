@@ -18,7 +18,7 @@ const int POSITION_B = -6000;
 
 AccelStepper stepper(AccelStepper::DRIVER, PUL_PIN, DIR_PIN);
 
-void setup() {
+void linearStage_Setup() {
     /*
     Setup function for the linear stage
 
@@ -50,9 +50,11 @@ void setup() {
     */
 }
 
+/*
 void loop() {
   
 }
+*/
 
 void homeStage() {
     /*
