@@ -37,9 +37,7 @@ void linearStage_Setup() {
 }
 
 void loop() {
-  
 }
-
 void homeStage() {
     /*
     Homing function for the linear stage
@@ -72,7 +70,6 @@ void homeStage() {
     Serial.println("Homing Complete.");
     Serial.println("*---------------------------------------------*");
 }
-
 void moveToPosition(int position) {
     /*
     Move function for linear stage

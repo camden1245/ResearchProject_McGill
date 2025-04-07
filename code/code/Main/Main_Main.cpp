@@ -14,7 +14,6 @@ void setup() {
     motorSetup();
     syringePump_Setup();
 }
-
 void loop() {
 	/* loop for predetermined number of layers, 
 	loop 1: 'position at A': 1

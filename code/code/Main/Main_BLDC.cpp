@@ -8,7 +8,6 @@ void motorSetup() {
     esc.attach(ESC_PIN, MOTOR_MIN_PULSE, MOTOR_MAX_PULSE);
 	delay(10000);
 }
-
 void motorLoop() {
 	/*
 	loop for the motor  to ramp up to a value, TARGET_RPM, then ramp back down to idle
