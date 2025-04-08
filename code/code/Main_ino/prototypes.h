@@ -8,5 +8,6 @@ void dispenseVolume();
 void linearStage_Setup();
 void homeStage();
 void moveToPosition(int position);
+void updateScreen(const String& status, int cycleNum);
 
 #endif

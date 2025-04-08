@@ -12,6 +12,9 @@ void setup() {
 	*/
 	
     Serial.begin(9600);
+    screen_setup();
+    updateScreen("System Initialized");
+
     linearStage_Setup();
     //motorSetup();
     syringePump_Setup();
@@ -32,13 +35,28 @@ void loop() {
 	
 	//move to position
     static bool positionAtA = true;
+    
     for (int i = 0; i < NUMBER_OF_LAYERS; i++) {
+        int currentCycle = i + 1;
+
+        String pos = positionAtA ? "A" : "B";
+        int progress = map(i,0,NUMBER_OF_LAYERS - 1, 0, 100);
+
+        updateScreen("Moving To Position: " + pos, currentCycle, progress);
         moveToPosition(positionAtA ? POSITION_A : POSITION_B);
+        updateScreen("At Position: " + pos, currentCycle, progress);
         delay(1000);
+
+        updateScreen("Dispensing Solution: " + pos, currentCycle), progress;
         dispenseVolume();
         delay(1000);
+
+        updateScreen("Spinning Substrate", currentCycle, progress)
         //motorLoop();
         delay(1000);
+
         positionAtA = !positionAtA;
     }
+    updateScreen("Process Complete", NUMBER_OF_LAYERS, 100)
+    delay(10000);
 }
