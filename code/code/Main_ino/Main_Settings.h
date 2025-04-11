@@ -18,23 +18,23 @@
 
 
 // Linear stage settings
-const int maxSpeed = 750;
-const int POSITION_A = -5000; 			  		// depositing location A
-const int POSITION_B = -6000;						// depositing location B
-const int homingSpeed = 750;				  		// speed the motor moves when in homing
-const int acceleration = 1000;						// acceleration of the linear stage					
+const uint16_t maxSpeed = 750;
+const int16_t POSITION_A = -5000; 			  		// depositing location A
+const int16_t POSITION_B = -6000;					  	// depositing location B
+const uint16_t homingSpeed = 750;				  		// speed the motor moves when in homing
+const uint16_t acceleration = 1000;						// acceleration of the linear stage					
 
 
 // Spin coating settings
-const int NUMBER_OF_LAYERS = 10;					// number of layers 
+const uint8_t NUMBER_OF_LAYERS = 10;					// number of layers 
 
 
 // DC Motor settings
-const int MOTOR_SPIN_COATING_RPM = 3000;			// desired rpm for spin coating (value to ramp up to)
-const int MOTOR_SPIN_COATING_TIME = 5000;			// duration after motor ramps up to desired rpm, ms
-const int minPulse = 1000;					// min pulse for motor (1000, 2000)
-const int maxPulse = 2000;					// max pulse for motor (1000, 2000)
-const int maxRPM = 9480;							// max rpm of motor, 790KV * 12 V
+const uint16_t MOTOR_SPIN_COATING_RPM = 3000;			// desired rpm for spin coating (value to ramp up to)
+const uint16_t MOTOR_SPIN_COATING_TIME = 5000;			// duration after motor ramps up to desired rpm, ms
+const uint16_t minPulse = 1000;					// min pulse for motor (1000, 2000)
+const uint16_t maxPulse = 2000;					// max pulse for motor (1000, 2000)
+const uint16_t maxRPM = 9480;							// max rpm of motor, 790KV * 12 V
 
 #endif
 

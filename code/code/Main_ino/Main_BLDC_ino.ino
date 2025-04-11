@@ -31,8 +31,8 @@ void motorLoop() {
 	long the coating should occur
 	*/
 	
-  int TARGET_RPM = 7000;
-  int targetPulse = map(TARGET_RPM, 0, maxRPM, minPulse, maxPulse);
+  unsigned int TARGET_RPM = 7000;
+  unsigned int targetPulse = map(TARGET_RPM, 0, maxRPM, minPulse, maxPulse);
   targetPulse = constrain(targetPulse, minPulse, maxPulse);
 
   // RAMP UP

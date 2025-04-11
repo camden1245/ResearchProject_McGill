@@ -12,4 +12,13 @@ void homeStage();
 void moveToPosition(int position);
 void updateScreen(const String& status, int cycleNum);
 
+enum StatusMsg {
+    MSG_MOVING_TO_POS,
+    MSG_AT_POS,
+    MSG_DISPENSING,
+    MSG_SPINNING
+};
+
+void getStatusMessage(char* dest, StatusMsg msg, const char* suffix = nullptr);
+
 #endif
