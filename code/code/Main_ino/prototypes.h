@@ -1,6 +1,8 @@
 #ifndef PROTOTYPES_H
 #define PROTOTYPES_H
 
+#include <Arduino.h>
+
 void motorSetup();
 void motorLoop();
 void syringePump_Setup();

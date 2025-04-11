@@ -54,7 +54,7 @@ TTL Operational Trigger Settings
 
 void syringePump_Setup() {
     pinMode(TRIGGER_PIN, OUTPUT);
-    pinMode(DIRECTION_PIN, OUTPUT);
+    //pinMode(DIRECTION_PIN, OUTPUT);
     digitalWrite(TRIGGER_PIN, HIGH);
 }
 

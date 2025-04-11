@@ -5,8 +5,15 @@
 Servo esc;
 
 void motorSetup() {
-    esc.attach(ESC_PIN, minPulse, maxPulse);
-	delay(10000);
+  esc.attach(ESC_PIN, minPulse, maxPulse);
+  esc.writeMicroseconds(minPulse);   // Step 1: Minimum throttle
+  delay(1000);                        // Wait 1 sec
+  esc.writeMicroseconds(maxPulse);   // Step 2: Maximum throttle
+  delay(1000);                        // Wait 1 sec
+  esc.writeMicroseconds(minPulse);   // Step 3: Back to minimum
+  delay(1000);                        // Wait 1 sec
+  delay(5000);
+  Serial.println(F("ESC Armed"));
 }
 
 void motorLoop() {
@@ -24,23 +31,23 @@ void motorLoop() {
 	long the coating should occur
 	*/
 	
-  int TARGET_RPM = 5000;
+  int TARGET_RPM = 7000;
   int targetPulse = map(TARGET_RPM, 0, maxRPM, minPulse, maxPulse);
   targetPulse = constrain(targetPulse, minPulse, maxPulse);
 
   // RAMP UP
   for (int pulse = minPulse; pulse <= targetPulse; pulse += 5) {
     esc.writeMicroseconds(pulse);
-    Serial.print("Ramping Up - Pulse: ");
+    Serial.print(F("Ramping Up - Pulse: "));
     Serial.println(pulse);
     delay(50);
   }
   delay(MOTOR_SPIN_COATING_TIME);
   //RAMP DOWN
-  for(int pulse = targetPulse; pulse <= minPulse; pulse -= 5){
+  for(int pulse = targetPulse; pulse >= minPulse; pulse -= 5){
     esc.writeMicroseconds(pulse);
-    Serial.print("ramping down - pulse: ");
-    Serial.print(pulse);
+    Serial.print(F("ramping down - pulse: "));
+    Serial.println(pulse);
     delay(50);
   }
 }

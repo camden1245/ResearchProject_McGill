@@ -71,9 +71,9 @@ void homeStage() {
     
         - Called in linearStage_Setup()
     */
-    
+    updateScreen("homing",0,0);
     stepper.setAcceleration(1200);
-    Serial.println("Homing...");
+    Serial.println(F("Homing..."));
     stepper.setMaxSpeed(homingSpeed);
     stepper.moveTo(1000000);  // Move indefinitely towards the limit switch
 
@@ -85,8 +85,8 @@ void homeStage() {
     delay(100);
 	
     stepper.setCurrentPosition(0); // Set zero reference
-    Serial.println("Homing Complete.");
-    Serial.println("*---------------------------------------------*");
+    Serial.println(F("Homing Complete."));
+    Serial.println(F("*---------------------------------------------*"));
 }
 
 void moveToPosition(int position) {
@@ -101,14 +101,14 @@ void moveToPosition(int position) {
         - Called in loop()
     */
     stepper.setAcceleration(1500);
-    Serial.print("Moving to Position: ");
+    Serial.print(F("Moving to Position: "));
     Serial.println(position);
     stepper.moveTo(position);
     while (stepper.distanceToGo() != 0) {
         stepper.run();
     }
-    Serial.print("Final Step Position: ");
+    Serial.print(F("Final Step Position: "));
     Serial.println(stepper.currentPosition());
-    Serial.println("Position reached.");
-    Serial.println("*---------------------------------------------*");
+    Serial.println(F("Position reached."));
+    Serial.println(F("*---------------------------------------------*"));
 }
